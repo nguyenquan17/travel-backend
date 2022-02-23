@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity 
@@ -20,18 +21,25 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Role implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	 @Column(name = "name_role" ,length = 255,nullable = false)
-	private String nameRole;
+	private String nameRole="User";
+
+
+
+	 
+	 
+	public Role(int id, String nameRole) {
+		super();
+		this.id = id;
+		this.nameRole = nameRole;
+	}
 
 
 	 

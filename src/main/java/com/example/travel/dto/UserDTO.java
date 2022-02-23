@@ -1,6 +1,7 @@
 package com.example.travel.dto;
 
 import com.example.travel.entity.Role;
+import com.example.travel.entity.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -31,13 +32,14 @@ public class UserDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String password;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Boolean active;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Role role;
 
     public UserDTO(int id) {
         this.id = id;
     }
+
+	public User toEntity() {
+		// TODO Auto-generated method stub
+		return new User(id,fullName, email, phone,address,username, password);
+	}
 }

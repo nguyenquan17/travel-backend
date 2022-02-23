@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class UserToken implements Serializable{
 
+
 	/**
 	 * 
 	 */
@@ -30,6 +31,12 @@ public class UserToken implements Serializable{
 
  	@OneToOne(cascade = CascadeType.ALL)
 	private User idUser;
+
+	public UserToken(String userToken, User idUser) {
+		super();
+		this.userToken = userToken;
+		this.idUser = idUser;
+	}
 	
 
 }

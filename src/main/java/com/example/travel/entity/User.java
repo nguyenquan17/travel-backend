@@ -1,5 +1,6 @@
 package com.example.travel.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class User implements Serializable {
 
 	/**
@@ -23,7 +25,7 @@ public class User implements Serializable {
 	
 	@Id
     @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 	
 	@Column(name = "`fullname`" ,length = 255,nullable = false)
@@ -39,13 +41,13 @@ public class User implements Serializable {
     private String address;
     
     @Column(name = "`username`", length = 255,nullable = false)
-    private String username;
+    private String userName;
     
     @Column(name = "`password`", length = 255,nullable = false)
     private String password;
     
     @Column(name = "`active`",nullable = false)
-    private Boolean active;
+    private Boolean active = true;
 
     //1 manager -> create n tour
 	@OneToMany(mappedBy = "manager")
@@ -58,4 +60,22 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_role")
     private Role role;
+    
+    
+   
+
+	public User(int id, String fullName, String email, String phone, String address, String username, String password) {
+	
+		this.id = id;
+		this.fullName = fullName;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+		this.userName = username;
+		this.password = password;
+
+	}
+
+    
 }
+
