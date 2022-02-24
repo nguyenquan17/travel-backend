@@ -2,10 +2,7 @@ package com.example.travel.controller;
 
 import com.example.travel.dto.TourDetailDTO;
 import com.example.travel.dto.UserDTO;
-import com.example.travel.entity.Regional;
-import com.example.travel.entity.Tour;
-import com.example.travel.entity.TourDetail;
-import com.example.travel.entity.TourType;
+import com.example.travel.entity.*;
 import com.example.travel.services.ITourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/v1/tours")
@@ -44,6 +42,11 @@ public class TourController {
                             entity.getQuantity(),
                             entity.getNotes(),
                             entity.getStar(),
+                            entity.getImageList()
+                                    .stream()
+                                    .map(image -> new Image(image.getId(),
+                                                            image.getImageUrl()))
+                                    .collect(Collectors.toList()),
                             new UserDTO(entity.getManager().getId()),
                             new TourType(entity.getTourType().getId()),
                             new Regional(entity.getRegional().getId()),

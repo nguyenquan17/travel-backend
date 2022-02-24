@@ -33,7 +33,7 @@ public class LoginDTO {
 
 	public LoginDTO(String token, String userName, String fullName, String email, String phone, String address,
 			Role role, Boolean active) {
-		
+
 		this.token = token;
 		this.userName = userName;
 		this.fullName = fullName;
@@ -43,6 +43,19 @@ public class LoginDTO {
 		this.role = role;
 		this.active = active;
 	}
-	
-	
+
+//	public LoginDTO(String token, String userName, String fullName, String email, String phone, String address, int role, Boolean active) {
+//		this.token = token;
+//		this.userName = userName;
+//		this.fullName = fullName;
+//		this.email = email;
+//		this.phone = phone;
+//		this.address = address;
+//		this.role = role;
+//		this.active = active;
+//	}
+
+
+//	public LoginDTO(String s, String userName, String email, String fullName, String address, String phone, int id, Boolean active) {
+//	}
 }

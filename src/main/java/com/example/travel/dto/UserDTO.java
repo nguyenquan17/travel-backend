@@ -15,10 +15,16 @@ public class UserDTO {
     private int id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String fullName;
+    private String username;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String email;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String password;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String fullName;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String phone;
@@ -26,11 +32,7 @@ public class UserDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String address;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String username;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String password;
 
 
 
@@ -40,6 +42,6 @@ public class UserDTO {
 
 	public User toEntity() {
 		// TODO Auto-generated method stub
-		return new User(id,fullName, email, phone,address,username, password);
+		return new User(id,username,email, password, fullName,  phone,address);
 	}
 }

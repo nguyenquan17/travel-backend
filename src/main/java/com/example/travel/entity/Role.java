@@ -1,5 +1,6 @@
 package com.example.travel.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Role implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -29,17 +31,15 @@ public class Role implements Serializable{
 	private int id;
 	
 	 @Column(name = "name_role" ,length = 255,nullable = false)
-	private String nameRole="User";
-
+	private String nameRole;
 
 
 	 
-	 
-	public Role(int id, String nameRole) {
-		super();
-		this.id = id;
-		this.nameRole = nameRole;
-	}
+
+//	public Role(int id, String nameRole) {
+//		this.id = id;
+//		this.nameRole = nameRole;
+//	}
 
 
 	 

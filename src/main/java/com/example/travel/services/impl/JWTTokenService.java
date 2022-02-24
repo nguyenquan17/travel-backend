@@ -32,14 +32,14 @@ public class JWTTokenService {
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();
 		
-		// conver user entity to dto
+		// convert user entity to dto
 		LoginDTO loginDTO = new LoginDTO(
 				user.getActive().equals(true) ? JWT : null,
 				user.getUserName(),
-				user.getEmail(), 
 				user.getFullName(),
-				user.getAddress(),
+				user.getEmail(),
 				user.getPhone(),
+				user.getAddress(),
 				user.getRole(),
 				user.getActive());
 		

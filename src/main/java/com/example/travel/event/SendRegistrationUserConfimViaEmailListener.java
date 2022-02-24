@@ -16,11 +16,11 @@ public class SendRegistrationUserConfimViaEmailListener implements ApplicationLi
 	@Override
 	public void onApplicationEvent(OnSendRegistrationUserConfimViaEmailEvent event) {
 		// TODO Auto-generated method stub
-		sendConfimViaEmail(event.getEmail());
+		sendConfirmViaEmail(event.getEmail());
 	}
 	
-	private void sendConfimViaEmail(String email) {
-		emailService.sendRegistrationUserConfim(email);
+	private void sendConfirmViaEmail(String email) {
+		emailService.sendRegistrationUserConfirm(email);
 	}
 
 }

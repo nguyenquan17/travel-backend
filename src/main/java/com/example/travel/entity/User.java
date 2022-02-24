@@ -50,15 +50,15 @@ public class User implements Serializable {
     private Boolean active = true;
 
     //1 manager -> create n tour
-	@OneToMany(mappedBy = "manager")
+	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
     private List<TourDetail> tourDetailList;
 
     //1 customer -> have n orders
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
     private List<TourOrder> tourOrderList;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_role")
+    @JoinColumn(name = "id_role", referencedColumnName = "id")
     private Role role;
     
     

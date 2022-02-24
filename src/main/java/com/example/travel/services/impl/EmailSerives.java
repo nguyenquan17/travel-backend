@@ -25,7 +25,7 @@ public class EmailSerives implements IEmailServices{
 	private IUserTokenRepository resetPasswordTokenReponsitory;
 
 	@Override
-	public void sendRegistrationUserConfim(String email) {
+	public void sendRegistrationUserConfirm(String email) {
 		// TODO Auto-generated method stub
 		User user = userService.findUserByEmail(email);
 		
