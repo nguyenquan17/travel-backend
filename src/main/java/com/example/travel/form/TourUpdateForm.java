@@ -1,9 +1,7 @@
-package com.example.travel.dto;
+package com.example.travel.form;
 
+import com.example.travel.dto.UserDTO;
 import com.example.travel.entity.Image;
-import com.example.travel.entity.Regional;
-import com.example.travel.entity.Tour;
-import com.example.travel.entity.TourType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,27 +14,21 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TourDetailDTO {
-    private int id;
-
-    private int tourType;
-    private int regional;
-    private int tour;
-
+public class TourUpdateForm {
     private String title;
     private String description;
     private String schedule;
     private Date dayStart;
     private String vehicle;
     private String departureFrom;
-    private Long price ;
+    private Long price;
     private int quantity;
     private String notes;
-    private int star;
 
+    private UserDTO modifiedBy;
+    //image
     private List<Image> imageList;
-
-    private UserDTO creator;
-
-
+    private int tourType;
+    private int regional;
+    private int tour;
 }

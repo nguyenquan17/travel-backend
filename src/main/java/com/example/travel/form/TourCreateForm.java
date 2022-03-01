@@ -1,5 +1,6 @@
-package com.example.travel.dto;
+package com.example.travel.form;
 
+import com.example.travel.dto.UserDTO;
 import com.example.travel.entity.Image;
 import com.example.travel.entity.Regional;
 import com.example.travel.entity.Tour;
@@ -16,27 +17,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TourDetailDTO {
-    private int id;
-
-    private int tourType;
-    private int regional;
-    private int tour;
-
+public class TourCreateForm {
     private String title;
     private String description;
     private String schedule;
     private Date dayStart;
     private String vehicle;
     private String departureFrom;
-    private Long price ;
+    private Long price;
     private int quantity;
     private String notes;
-    private int star;
 
+    //tao boi ?
+    private UserDTO createdBy;
+    //image
     private List<Image> imageList;
-
-    private UserDTO creator;
-
-
+    private int tourType;
+    private int regional;
+    private int tour;
 }

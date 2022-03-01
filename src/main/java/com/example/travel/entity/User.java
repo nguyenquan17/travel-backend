@@ -60,9 +60,6 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_role", referencedColumnName = "id")
     private Role role;
-    
-    
-   
 
 	public User(int id, String fullName, String email, String phone, String address, String username, String password) {
 	
@@ -76,6 +73,8 @@ public class User implements Serializable {
 
 	}
 
-    
+    public User(int id) {
+        this.id = id;
+    }
 }
 

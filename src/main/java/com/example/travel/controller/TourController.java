@@ -3,16 +3,16 @@ package com.example.travel.controller;
 import com.example.travel.dto.TourDetailDTO;
 import com.example.travel.dto.UserDTO;
 import com.example.travel.entity.*;
+import com.example.travel.mapper.TourDetailMapper;
 import com.example.travel.services.ITourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,38 +24,51 @@ public class TourController {
     @Autowired
     private ITourDetailService iTourDetailService;
 
+    TourDetailMapper mapper = new TourDetailMapper();
+
     @GetMapping
     public ResponseEntity<List<TourDetailDTO>> getAllTours(){
         List<TourDetail> tourDetailEntity = iTourDetailService.getAllTours();
         List<TourDetailDTO> tourDetailDTOList = new ArrayList<>();
         for (TourDetail entity: tourDetailEntity ) {
             tourDetailDTOList.add(
-                    new TourDetailDTO(
-                            entity.getId(),
-                            entity.getTitle(),
-                            entity.getDescription(),
-                            entity.getSchedule(),
-                            entity.getDayStart(),
-                            entity.getVehicle(),
-                            entity.getDepartureFrom(),
-                            entity.getPrice(),
-                            entity.getQuantity(),
-                            entity.getNotes(),
-                            entity.getStar(),
-                            entity.getImageList()
-                                    .stream()
-                                    .map(image -> new Image(image.getId(),
-                                                            image.getImageUrl()))
-                                    .collect(Collectors.toList()),
-                            new UserDTO(entity.getManager().getId()),
-                            new TourType(entity.getTourType().getId()),
-                            new Regional(entity.getRegional().getId()),
-                            new Tour(entity.getTourName().getId())
-                    )
+                    mapper.toDto(entity)
             );
         }
 
         return new ResponseEntity<>(tourDetailDTOList, HttpStatus.OK) {
         };
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<TourDetailDTO>> getSearchAllTours(@RequestParam(required = false) String location,
+                                                                 @RequestParam(required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date date,
+                                                                 @RequestParam(required = false) Long price) {
+        List<TourDetail> tourDetailEntity = iTourDetailService.getSearchAllToursByLocationAndDateAndPrice(location,date,price);
+        List<TourDetailDTO> tourDetailDTOList = new ArrayList<>();
+        for (TourDetail entity: tourDetailEntity){
+            tourDetailDTOList.add(
+                    mapper.toDto(entity)
+            );
+        }
+        return new ResponseEntity<>(tourDetailDTOList, HttpStatus.OK);
+    }
+
+    @PostMapping("/create-tour")
+    public ResponseEntity<?> createTour(@RequestBody TourDetailDTO tourCreateForm){
+        iTourDetailService.createTour(tourCreateForm);
+        return new ResponseEntity<String>("Created !", HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateTour(@PathVariable(name = "id") int id, @RequestBody TourDetailDTO tourUpdateForm){
+        iTourDetailService.updateTour(id, tourUpdateForm);
+        return new ResponseEntity<String>("Updated !", HttpStatus.OK);
+    }
+
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTour(@PathVariable(name = "id") int id){
+        iTourDetailService.deleteTour(id);
+        return new ResponseEntity<String>("Deleted !", HttpStatus.OK);
     }
 }

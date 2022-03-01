@@ -45,8 +45,8 @@ public class TourDetail implements Serializable{
 	@Column(name = "departure_from" ,length = 255,nullable = false)
 	private String departureFrom;
 	
-	@Column(name = "price" ,length = 255,nullable = false)
-	private String price;
+	@Column(name = "price" ,nullable = false)
+	private Long price;
 	
 	@Column(name = "quantity", nullable = false)
 	private int quantity;
@@ -54,8 +54,8 @@ public class TourDetail implements Serializable{
 	@Column(name = "notes" ,length = 255,nullable = false)
 	private String notes;
 	
-	@Column(name = "star" ,length = 255,nullable = false)
-	private String star;
+	@Column(name = "star")
+	private int star = 5;
 
 
 	@ManyToOne
@@ -67,17 +67,17 @@ public class TourDetail implements Serializable{
 	private List<Image> imageList;
 
 	//1 tour -> 1 thanh pho
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "id_tour")
 	private Tour tourName;
 
 	//1 tour -> 1 mien
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "id_regional")
 	private Regional regional;
 
 	//Trong nuoc, ngoai nuoc, du lich bien, du lich rung,...
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "id_tourType")
 	private TourType tourType;
 }
