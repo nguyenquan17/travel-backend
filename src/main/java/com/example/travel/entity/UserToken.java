@@ -16,9 +16,6 @@ import javax.persistence.*;
 public class UserToken implements Serializable{
 
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -29,11 +26,11 @@ public class UserToken implements Serializable{
 	@Column(name = "user_token" ,length = 255,nullable = false)
 	private String userToken;
 
- 	@OneToOne(cascade = CascadeType.ALL)
+ 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_user", referencedColumnName = "id")
 	private User idUser;
 
 	public UserToken(String userToken, User idUser) {
-		super();
 		this.userToken = userToken;
 		this.idUser = idUser;
 	}

@@ -1,13 +1,15 @@
 package com.example.travel.services.impl;
 
-import java.util.Collections;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.travel.entity.Role;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.example.travel.dto.LoginDTO;
@@ -23,7 +25,18 @@ public class JWTTokenService {
 	private static final String SECRET = "2362001";
 	private static final String PREFIX_TOKEN = "Bearer";
 	private static final String AUTHORIZATION  = "Authorization";
-	
+	private static UserDetailServiceImpl userDetailService;
+
+	public JWTTokenService(UserDetailServiceImpl userDetailService) {
+		JWTTokenService.userDetailService = userDetailService;
+	}
+//	private static UserDetailServiceImpl userDetailService;
+
+
+//	@Autowired
+//	private UserDetailServiceImpl userDetailService;
+
+
 	public static void addJWTTokenAndUserInfoToBody(HttpServletResponse response, User user) throws Exception {
 		// TODO Auto-generated method stub
 		String JWT = Jwts.builder()
@@ -40,10 +53,10 @@ public class JWTTokenService {
 				user.getEmail(),
 				user.getPhone(),
 				user.getAddress(),
-				user.getRole(),
+				new Role(user.getRole().getId(),user.getRole().getNameRole()),
 				user.getActive());
 		
-		// conver obj sang json
+		// convert obj sang json
 		ObjectWriter objectWriter= new ObjectMapper().writer().withDefaultPrettyPrinter();
 		String json = objectWriter.writeValueAsString(loginDTO);
 		
@@ -52,10 +65,13 @@ public class JWTTokenService {
 		response.getWriter().write(json);
 	}
 
-	public static Authentication parseTokenToUserInformation(HttpServletRequest request) {
+	public String getUserNameFromJwtToken(String token) {
+		return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
+	}
+	public static Authentication parseTokenToUserInformation(@NotNull HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String token = request.getHeader(AUTHORIZATION);
-		
+
 		if(token == null) {
 			return null;
 		}
@@ -65,8 +81,13 @@ public class JWTTokenService {
 				.parseClaimsJws(token.replace(PREFIX_TOKEN, ""))
 				.getBody()
 				.getSubject();
+
+
+
 		if(username != null) {
-			return  new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+			System.out.println(username);
+			UserDetails userDetails = userDetailService.loadUserByUsername(username);
+			return  new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
 		}else {
 			return null;
 		}

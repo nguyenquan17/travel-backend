@@ -2,6 +2,7 @@ package com.example.travel.services.impl;
 
 import java.util.UUID;
 
+import com.example.travel.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -28,7 +29,10 @@ public class UserServices implements IUserServices {
 	
 	@Autowired
 	private IUserRepository userReponsitory;
-	
+
+	@Autowired
+	private IRoleRepository iRoleRepository;
+
 	@Autowired
 	private IUserTokenRepository userTokenRepositorys;
 
@@ -51,7 +55,7 @@ public class UserServices implements IUserServices {
 	
 		//Encoder password
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-	
+		user.setRole(new Role(2,"User"));
 		
 		//tạo user
 		userReponsitory.save(user);
@@ -139,18 +143,19 @@ public class UserServices implements IUserServices {
 		
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		//Check user tồn tại qua username
-		User user = userReponsitory.findByUserName(username);
-		if(user == null) {
-			throw new UsernameNotFoundException(username);
-		}
-		return new org.springframework.security.core.userdetails.User(user.getUserName(), 
-				user.getPassword(), 
-				AuthorityUtils.createAuthorityList(user.getRole().getNameRole()));
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		// TODO Auto-generated method stub
+//		//Check user tồn tại qua username
+//		User user = userReponsitory.findByUserName(username);
+//		if(user == null) {
+//			throw new UsernameNotFoundException(username);
+//		}
+//		System.out.println(user.getRole().getNameRole());
+//		return new org.springframework.security.core.userdetails.User(user.getUserName(),
+//				user.getPassword(), true, true, true, true,
+//				AuthorityUtils.createAuthorityList(user.getRole().getNameRole()));
+//	}
 
 	@Override
 	public User findByUserName(String username) {

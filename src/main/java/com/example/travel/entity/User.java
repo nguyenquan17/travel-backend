@@ -25,7 +25,7 @@ public class User implements Serializable {
 	
 	@Id
     @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 	
 	@Column(name = "`fullname`" ,length = 255,nullable = false)
@@ -47,7 +47,7 @@ public class User implements Serializable {
     private String password;
     
     @Column(name = "`active`",nullable = false)
-    private Boolean active = true;
+    private Boolean active = false;
 
     //1 manager -> create n tour
 	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
@@ -57,24 +57,41 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
     private List<TourOrder> tourOrderList;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_role", referencedColumnName = "id")
     private Role role;
 
-	public User(int id, String fullName, String email, String phone, String address, String username, String password) {
-	
-		this.id = id;
-		this.fullName = fullName;
-		this.email = email;
-		this.phone = phone;
-		this.address = address;
-		this.userName = username;
-		this.password = password;
+//	public User(int id, String fullName, String email, String phone, String address, String username, String password) {
+//
+//		this.id = id;
+//		this.fullName = fullName;
+//		this.email = email;
+//		this.phone = phone;
+//		this.address = address;
+//		this.userName = username;
+//		this.password = password;
+//
+//	}
 
-	}
+    public User(int id,String userName,String email,String password, String fullName,  String phone, String address, Role role) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+    }
 
     public User(int id) {
         this.id = id;
+    }
+
+    public User(int id, String fullName, String email) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
     }
 }
 

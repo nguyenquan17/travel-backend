@@ -37,7 +37,7 @@ public class TourDetailMapper {
 
     public TourDetail toEntity(@NotNull TourDetailDTO dto){
         TourDetail entity = new TourDetail();
-
+        entity.setId(dto.getId());
         entity.setTourType(new TourType(dto.getTourType()));
         entity.setRegional(new Regional(dto.getRegional()));
         entity.setTourName(new Tour(dto.getTour()));

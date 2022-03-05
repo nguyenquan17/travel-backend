@@ -11,17 +11,24 @@ import com.example.travel.entity.UserToken;
 
 public interface IUserTokenRepository extends JpaRepository<UserToken, Integer>{
 
-public UserToken findByUserToken(String userToken);
+	public UserToken findByUserToken(String userToken);
 	
 	public boolean existsByUserToken(String userToken);
 	
-	@Transactional 
-	@Modifying
-	@Query("	SELECT 	userToken	"
-			+ "	FROM 	UserToken "
-			+ " WHERE 	idUser.id = :userId")
+//	@Transactional
+//	@Modifying
+//	@Query("	SELECT 	userToken	"
+//			+ "	FROM 	UserToken "
+//			+ " WHERE 	idUser.id = :userId")
+//	public String findByUserId(@Param("userId") int userId);
+
+	@Transactional
+//	@Modifying
+	@Query(value = "	SELECT 	user_token	"
+			+ "	FROM 	User_Token "
+			+ " WHERE 	id_user = :userId",nativeQuery = true)
 	public String findByUserId(@Param("userId") int userId);
-	
+
 	@Transactional 
 	@Modifying
 	@Query("	DELETE 							"

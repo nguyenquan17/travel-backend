@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ public class TourDetailDTO {
     private String title;
     private String description;
     private String schedule;
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private Date dayStart;
     private String vehicle;
     private String departureFrom;
@@ -39,4 +41,7 @@ public class TourDetailDTO {
     private UserDTO creator;
 
 
+    public TourDetailDTO(int id) {
+        this.id = id;
+    }
 }

@@ -1,10 +1,7 @@
 package com.example.travel.services.impl;
 
 import com.example.travel.dto.TourDetailDTO;
-import com.example.travel.dto.UserDTO;
 import com.example.travel.entity.*;
-import com.example.travel.form.TourCreateForm;
-import com.example.travel.form.TourUpdateForm;
 import com.example.travel.mapper.TourDetailMapper;
 import com.example.travel.repository.ITourDetailRepository;
 import com.example.travel.services.ITourDetailService;
@@ -12,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class TourDetailService implements ITourDetailService {
@@ -34,7 +30,7 @@ public class TourDetailService implements ITourDetailService {
 
     @Override
     public List<TourDetail> getSearchAllToursByLocationAndDateAndPrice(String title, Date dayStart, Long price) {
-        return iTourDetailRepository.getTourDetailByTitleContainingOrDayStartOrPriceLessThanEqual(title, dayStart, price);
+        return iTourDetailRepository.getTourDetailByTitleOrDayStartOrPrice(title, dayStart, price);
     }
 
     @Override
@@ -43,6 +39,7 @@ public class TourDetailService implements ITourDetailService {
     }
 
     @Override
+    @Transactional
     public void createTour(TourDetailDTO tourCreateForm) {
         TourDetail tourDetail = mapper.toEntity(tourCreateForm);
         iTourDetailRepository.save(tourDetail);

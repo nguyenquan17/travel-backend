@@ -80,4 +80,8 @@ public class TourDetail implements Serializable{
 	@OneToOne()
 	@JoinColumn(name = "id_tourType")
 	private TourType tourType;
+
+	public TourDetail(int id) {
+		this.id = id;
+	}
 }

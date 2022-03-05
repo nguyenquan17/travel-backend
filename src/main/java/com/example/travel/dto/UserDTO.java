@@ -33,15 +33,21 @@ public class UserDTO {
     private String address;
 
 
-
+    private Role role;
 
 
     public UserDTO(int id) {
         this.id = id;
     }
 
-	public User toEntity() {
+    public UserDTO(int id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+    }
+
+    public User toEntity() {
 		// TODO Auto-generated method stub
-		return new User(id,username,email, password, fullName,  phone,address);
+		return new User(id,username,email, password, fullName,  phone, address, role);
 	}
 }

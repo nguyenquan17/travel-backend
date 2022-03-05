@@ -4,7 +4,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.example.travel.entity.User;
 
-public interface IUserServices extends UserDetailsService{
+public interface IUserServices {
 
 	void createUser(User user);
 

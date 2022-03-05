@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "api/v1/tours")
 @CrossOrigin("*")
+@ControllerAdvice
 public class TourController {
 
     @Autowired
@@ -42,7 +46,7 @@ public class TourController {
 
     @GetMapping("/search")
     public ResponseEntity<List<TourDetailDTO>> getSearchAllTours(@RequestParam(required = false) String location,
-                                                                 @RequestParam(required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date date,
+                                                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy.MM.dd") Date date,
                                                                  @RequestParam(required = false) Long price) {
         List<TourDetail> tourDetailEntity = iTourDetailService.getSearchAllToursByLocationAndDateAndPrice(location,date,price);
         List<TourDetailDTO> tourDetailDTOList = new ArrayList<>();
@@ -55,20 +59,28 @@ public class TourController {
     }
 
     @PostMapping("/create-tour")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Manager')")
     public ResponseEntity<?> createTour(@RequestBody TourDetailDTO tourCreateForm){
         iTourDetailService.createTour(tourCreateForm);
         return new ResponseEntity<String>("Created !", HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
+//    @ExceptionHandler(value = AccessDeniedException.class)
     public ResponseEntity<?> updateTour(@PathVariable(name = "id") int id, @RequestBody TourDetailDTO tourUpdateForm){
         iTourDetailService.updateTour(id, tourUpdateForm);
         return new ResponseEntity<String>("Updated !", HttpStatus.OK);
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
+//    @Secured("User")
     public ResponseEntity<?> deleteTour(@PathVariable(name = "id") int id){
         iTourDetailService.deleteTour(id);
         return new ResponseEntity<String>("Deleted !", HttpStatus.OK);
     }
+
+    ////////////////////////////////////////////////////////////////
+
 }

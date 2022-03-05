@@ -27,16 +27,17 @@ public class Role implements Serializable{
 
 	@Id
     @Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	 @Column(name = "name_role" ,length = 255,nullable = false)
 	private String nameRole;
 
+	public Role(String nameRole) {
+		this.nameRole = nameRole;
+	}
 
-	 
-
-//	public Role(int id, String nameRole) {
+	//	public Role(int id, String nameRole) {
 //		this.id = id;
 //		this.nameRole = nameRole;
 //	}

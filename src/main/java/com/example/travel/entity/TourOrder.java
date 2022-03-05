@@ -38,8 +38,8 @@ public class TourOrder implements Serializable{
 	@CreationTimestamp
 	private Date dateOrder;
 	
-	@Column(name = "cost_order" ,length = 255,nullable = false)
-	private String costOrder;
+	@Column(name = "cost_order" ,nullable = false)
+	private Long costOrder;
 	
 	@Column(name = "number_of_people" ,nullable = false)
 	private int numberOfPeople;
