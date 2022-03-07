@@ -23,10 +23,10 @@ CREATE TABLE `TourDetail` (
 	`day_start` DATETIME NOT NULL,
 	`vehicle` varchar(255) NOT NULL,
 	`departure_from` varchar(255) NOT NULL,
-	`price` varchar(255) NOT NULL,
+	`price` int NOT NULL,
 	`quantity` INT NOT NULL,
 	`notes` TEXT(255) NOT NULL,
-	`star` varchar(255) NOT NULL,
+	`star` TINYINT NOT NULL,
 	PRIMARY KEY (`id`)
 );
 CREATE TABLE `Comment` (
@@ -43,7 +43,7 @@ CREATE TABLE `TourType` (
 );
 
 CREATE TABLE `Regional` (
-	`id` INT NOT NULL,
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`id_tourType` INT NOT NULL,
 	`name_regional` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
@@ -69,7 +69,7 @@ CREATE TABLE `TourOrder` (
 	`id_tourDetail` INT NOT NULL,
 	`name_order` varchar(255) NOT NULL,
 	`date_order` DATETIME NOT NULL,
-	`cost_order` varchar(255) NOT NULL,
+	`cost_order` int NOT NULL,
 	`number_of_people` INT NOT NULL,
 	`number_of_rooms` INT NOT NULL,
     Key (id),
@@ -140,14 +140,35 @@ ALTER TABLE `Comment` ADD CONSTRAINT `Comment_fk1` FOREIGN KEY (`id_user`) REFER
 
 
 
+INSERT INTO `Role` (`name_role`)
+VALUE				('Admin'),
+					('User'),
+                   ('Manager');
+
+INSERT INTO `User` 	(`fullname`,			`email`,						`phone`,														`address`,		`username`, 	`password` ,	`id_role`,`active`	)
+VALUE				('Nguyen Quan',		'quan123@gmail.com',		'033682712387',		'Hà Nội'	,		'quan123456',			'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi'	 ,	1,true ),
+					('Trần Thai Minh',		'abc@gmail.com',		'023344312387',		'Sài Gòn'	,		'thaiminh',			'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi'	 ,	2,false );
 
 
+INSERT INTO `Tourtype` (`name`)
+VALUE					('Du lịch trong nước'),
+						('Du lịch ngoài nước'),
+                        ('Du lịch Biển đảo'),
+                        ('Du lịch rừng');
+                        
+INSERT INTO `Regional` (`id_tourType`,`name_regional`)
+VALUE					(1,'Du lịch Miền bắc'),
+						(1,'Du lịch Tây bắc'),
+                        (1,'Du lịch Miền Nam'),
+                        (1,'Du lịch Miền Trung');
 
-INSERT INTO `Tour` (`id`,`name`,`id_regional`)
-VALUE				(1,'Tour du lich',1),
-					(2,'Tour du lich1',3),
-                    (3,'Tour du lich2',2),
-                    (4,'Tour du lich22',4);
+INSERT INTO `Tour` (`name`,`id_regional`)
+VALUE				('Tour du lich',1),
+					('Tour du lich1',3),
+                    ('Tour du lich2',2),
+                    ('Tour du lich3',4);
+
+
 
 INSERT INTO `TourDetail` (`id`,`id_tourType`,`id_regional`,`id_tour`,`id_user`,`title`,`description`,`schedule`,`day_start`,`vehicle`,`departure_from`,`price`,`quantity`,`notes`,`star`)
 VALUE					(1		,1				,1			,1		,1		,'Du lịch Miền Bắc Hà Nội -Đền Hùng từ Sài Gòn','Tour Tây Bắc Nổi tiếng với nhiều địa điểm tham quan, 
@@ -155,34 +176,13 @@ vui chơi mang đậm bản sắc văn hóa dân tộc, thiên nhiên hùng vĩ,
  núi rừng này dường như đều được thiên nhiên “sắp đặt” một cách rất tài tình,
  sẵn sàng làm xao xuyến tâm hồn của bất cứ ai đặt chân đến dây. Bạn đã dự định sẽ du lịch Tây 
  Bắc một lần để tự mình cảm nhận những nét đẹp của nơi đây xem có đúng như lời quảng bá hay không? Hãy nhanh tay đặt tour du lịch Hè tại Du Lịch Việt đi và cảm nhận nhé!',
- '6 ngày 5 đêm','2020-09-14','Máy bay','Hà Nội','20.000.000',4,'Sau khi đăng ký, thanh toán ít nhất 50% tiền cọc và đóng hết 100% trước  khởi hành 10 ngày','Xuất sắc');
+ '6 ngày 5 đêm','2020-09-14','Máy bay','Hà Nội',20000000,4,'Sau khi đăng ký, thanh toán ít nhất 50% tiền cọc và đóng hết 100% trước  khởi hành 10 ngày',5);
+INSERT INTO `Image` (`id`, `id_tourDetail`, `image`)
+VALUE 				(1,		1,			 'https://res.cloudinary.com/dv0zrozae/image/upload/v1645691520/travel2_shqdqo.jpg');
 
 
-INSERT INTO `Tourtype` (`id`,`name`)
-VALUE					(1,'Du lịch trong nước'),
-						(2,'Du lịch ngoài nước'),
-                        (3,'Du lịch Biển đảo'),
-                        (4,'Du lịch rừng');
-                        
-INSERT INTO `Regional` (`id`,`id_tourType`,`name_regional`)
-VALUE					(1,1,'Du lịch Miền bắc'),
-						(2,1,'Du lịch Tây bắc'),
-                        (3,1,'Du lịch Miền Nam'),
-                        (4,1,'Du lịch Miền Trung');
-
-INSERT INTO `User` 	(`fullname`,			`email`,						`phone`,														`address`,		`username`, 	`password` ,	`id_role`,`active`	)
-VALUE				('Trần Danh Thái',		'hanhhanoi1999@gmail.com',		'0336827187',		'Hà Nội'	,		'Thai1234',			'1234567'	 ,	1,true ),
-					('Trần Danh Thái1',		'hanhhanoi19@gmail.com',		'0233443187',		'Sài Gòn'	,		'th3i23232',			'1234567'	 ,	2,false );
-
-INSERT INTO `Role` (`name_role`)
-VALUE				('Admin'),
-					('User'),
-                   ('Manager');
-
-
-
-
-
+INSERT INTO `Payment` (`name_payment`)
+value				 ('Thanh toán qua TKNG');
 
 
 
