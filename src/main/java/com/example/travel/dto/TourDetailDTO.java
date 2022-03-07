@@ -4,6 +4,7 @@ import com.example.travel.entity.Image;
 import com.example.travel.entity.Regional;
 import com.example.travel.entity.Tour;
 import com.example.travel.entity.TourType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TourDetailDTO {
     private int id;
 

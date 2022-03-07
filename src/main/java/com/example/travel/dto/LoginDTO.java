@@ -12,11 +12,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class LoginDTO {
 
 	private String token;
-	
+
+	private String refreshToken;
+
     private String userName;
     
     private String fullName;
@@ -43,6 +45,8 @@ public class LoginDTO {
 		this.role = role;
 		this.active = active;
 	}
+
+
 
 //	public LoginDTO(String token, String userName, String fullName, String email, String phone, String address, int role, Boolean active) {
 //		this.token = token;

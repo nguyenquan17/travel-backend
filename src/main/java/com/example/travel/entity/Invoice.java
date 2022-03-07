@@ -26,7 +26,8 @@ public class Invoice implements Serializable{
 	private int id;
 
 	//
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "id_tourOrder", referencedColumnName = "id")
 	private TourOrder tourOrder;
 
 }

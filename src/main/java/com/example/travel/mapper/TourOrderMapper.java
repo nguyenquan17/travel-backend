@@ -11,12 +11,12 @@ import com.example.travel.entity.User;
 public class TourOrderMapper {
     public OrderDTO toDto(TourOrder entity){
         OrderDTO dto = new OrderDTO();
-//        dto.setComposeId(new TourOrderPK(entity.getComposeId().getIdUser(),
-//                                        entity.getComposeId().getIdTourDetail()));
+        dto.setComposeId(new TourOrderPK(entity.getComposeId().getIdUser(),
+                                        entity.getComposeId().getIdTourDetail()));
         dto.setId(entity.getId());
         dto.setNameOrder(entity.getNameOrder());
-        dto.setCostOrder(entity.getCostOrder());
         dto.setDateOrder(entity.getDateOrder());
+        dto.setCostOrder(entity.getCostOrder());
         dto.setNumberOfPeople(entity.getNumberOfPeople());
         dto.setNumberOfRooms(entity.getNumberOfRooms());
         dto.setPaymentMethod(entity.getPaymentMethod());
@@ -29,12 +29,12 @@ public class TourOrderMapper {
 
     public TourOrder toEntity(OrderDTO dto){
         TourOrder entity = new TourOrder();
-//        entity.setComposeId(new TourOrderPK(dto.getComposeId().getIdUser(),
-//                                            dto.getComposeId().getIdTourDetail()));
+        entity.setComposeId(new TourOrderPK(dto.getComposeId().getIdUser(),
+                                            dto.getComposeId().getIdTourDetail()));
         entity.setId(dto.getId());
         entity.setNameOrder(dto.getNameOrder());
-        entity.setCostOrder(dto.getCostOrder());
         entity.setDateOrder(dto.getDateOrder());
+        entity.setCostOrder(dto.getCostOrder());
         entity.setNumberOfPeople(dto.getNumberOfPeople());
         entity.setNumberOfRooms(dto.getNumberOfRooms());
         entity.setPaymentMethod(dto.getPaymentMethod());

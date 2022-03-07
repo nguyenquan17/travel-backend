@@ -32,7 +32,7 @@ public class UserDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String address;
 
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Role role;
 
 

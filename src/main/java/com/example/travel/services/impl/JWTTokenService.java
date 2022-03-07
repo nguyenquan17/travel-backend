@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.travel.entity.RefreshToken;
 import com.example.travel.entity.Role;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,15 +22,19 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JWTTokenService {
-	private static final long EXPIRATION_TIME = 864000000;
+	private static final long EXPIRATION_TIME = 3600000; //864000000
 	private static final String SECRET = "2362001";
 	private static final String PREFIX_TOKEN = "Bearer";
 	private static final String AUTHORIZATION  = "Authorization";
-	private static UserDetailServiceImpl userDetailService;
 
-	public JWTTokenService(UserDetailServiceImpl userDetailService) {
+	private static UserDetailServiceImpl userDetailService;
+	private static RefreshTokenService refreshTokenService;
+
+	public JWTTokenService(UserDetailServiceImpl userDetailService, RefreshTokenService refreshTokenService) {
 		JWTTokenService.userDetailService = userDetailService;
+		JWTTokenService.refreshTokenService = refreshTokenService;
 	}
+
 //	private static UserDetailServiceImpl userDetailService;
 
 
@@ -44,10 +49,12 @@ public class JWTTokenService {
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();
-		
+
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
 		// convert user entity to dto
 		LoginDTO loginDTO = new LoginDTO(
 				user.getActive().equals(true) ? JWT : null,
+				refreshToken.getToken(),
 				user.getUserName(),
 				user.getFullName(),
 				user.getEmail(),
@@ -65,9 +72,20 @@ public class JWTTokenService {
 		response.getWriter().write(json);
 	}
 
-	public String getUserNameFromJwtToken(String token) {
-		return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
+	public String generateTokenFromUsername(String username) {
+		return Jwts.builder()
+				.setSubject(username)
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+				.signWith(SignatureAlgorithm.HS512, SECRET)
+				.compact();
 	}
+//	public String getUserNameFromJwtToken(String token) {
+//		return Jwts.parser()
+//				.setSigningKey(SECRET)
+//				.parseClaimsJws(token.replace(PREFIX_TOKEN, ""))
+//				.getBody()
+//				.getSubject();
+//	}
 	public static Authentication parseTokenToUserInformation(@NotNull HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String token = request.getHeader(AUTHORIZATION);

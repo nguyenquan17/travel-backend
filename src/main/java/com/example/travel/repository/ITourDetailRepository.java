@@ -15,7 +15,7 @@ public interface ITourDetailRepository extends JpaRepository<TourDetail, Integer
     @Modifying
     @Query(value = "	SELECT 	*	"
                  + "	FROM 	TourDetail"
-                    + " WHERE 	title LIKE %:title% or day_start = :dayStart and price = :price",nativeQuery = true)
+                    + " WHERE 	title LIKE %:title% and price = :price or day_start = :dayStart ",nativeQuery = true)
     List<TourDetail> getTourDetailByTitleOrDayStartOrPrice(String title, Date dayStart, Long price);
 
 //    List<TourDetail> getTourDetailByTitleContainingOrDayStartOrPrice(String title, Date dayStart, Long price);

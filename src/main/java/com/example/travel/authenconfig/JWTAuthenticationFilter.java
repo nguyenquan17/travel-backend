@@ -62,9 +62,5 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	    
-	    	
-	     
-	    }
+	}
 }

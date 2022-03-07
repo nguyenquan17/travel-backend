@@ -48,10 +48,12 @@ public class TourOrder implements Serializable{
 	private int numberOfRooms;
 
 	//foreign key
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "id_payment", referencedColumnName = "id")
 	private Payment paymentMethod;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "id_tourDetail", referencedColumnName = "id",insertable = false, updatable = false)
 	private TourDetail tourDetail;
 
 	@ManyToOne
