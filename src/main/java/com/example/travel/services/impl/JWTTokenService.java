@@ -22,7 +22,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JWTTokenService {
-	private static final long EXPIRATION_TIME = 3600000; //864000000
+	private static final long EXPIRATION_TIME = 864000000; //864000000
 	private static final String SECRET = "2362001";
 	private static final String PREFIX_TOKEN = "Bearer";
 	private static final String AUTHORIZATION  = "Authorization";
@@ -55,6 +55,7 @@ public class JWTTokenService {
 		LoginDTO loginDTO = new LoginDTO(
 				user.getActive().equals(true) ? JWT : null,
 				refreshToken.getToken(),
+				user.getId(),
 				user.getUserName(),
 				user.getFullName(),
 				user.getEmail(),

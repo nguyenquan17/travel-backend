@@ -37,7 +37,7 @@ public class TourDetailDTO {
     private int quantity;
     private String notes;
     private int star;
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Image> imageList;
 
     private UserDTO creator;

@@ -6,12 +6,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import java.beans.ConstructorProperties;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class UserDTO {
+
     private int id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -44,6 +46,11 @@ public class UserDTO {
         this.id = id;
         this.username = username;
         this.email = email;
+    }
+
+    public UserDTO(int id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
     }
 
     public User toEntity() {

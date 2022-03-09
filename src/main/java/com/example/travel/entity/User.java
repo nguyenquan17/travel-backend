@@ -1,5 +1,6 @@
 package com.example.travel.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
 
 	/**
@@ -50,7 +51,7 @@ public class User implements Serializable {
     private Boolean active = false;
 
     //1 manager -> create n tour
-	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "manager", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<TourDetail> tourDetailList;
 
     //1 customer -> have n orders
@@ -92,6 +93,11 @@ public class User implements Serializable {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
+    }
+
+    public User(int id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
     }
 }
 

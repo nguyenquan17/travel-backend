@@ -27,10 +27,9 @@ public class TourDetailMapper {
         dto.setStar(entity.getStar());
         dto.setImageList( entity.getImageList()
                 .stream()
-                .map(image -> new Image(image.getId(),
-                        image.getImageUrl()))
+                .map(image -> new Image(image.getId(), image.getImageUrl()))
                 .collect(Collectors.toList()));
-        dto.setCreator( new UserDTO(entity.getManager().getId()));
+        dto.setCreator( new UserDTO(entity.getManager().getId(),entity.getManager().getFullName()));
 
         return dto;
     }
@@ -57,7 +56,7 @@ public class TourDetailMapper {
                 .map(image -> new Image(image.getId(), image.getImageUrl()))
                 .collect(Collectors.toList()));
 
-        entity.setManager(new User(dto.getCreator().getId()));
+        entity.setManager(new User(dto.getCreator().getId(),dto.getCreator().getFullName()));
 
         return entity;
     }
