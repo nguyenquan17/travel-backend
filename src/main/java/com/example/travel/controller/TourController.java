@@ -81,6 +81,13 @@ public class TourController {
         return new ResponseEntity<String>("Deleted !", HttpStatus.OK);
     }
 
+
+    @DeleteMapping("/{ids}")
+    @PreAuthorize("hasAuthority('Admin')")
+    public ResponseEntity<?> deleteTours(@PathVariable(name = "ids") List<Integer> ids){
+        iTourDetailService.deleteTours(ids);
+        return new ResponseEntity<String>("Delete successfully!", HttpStatus.OK);
+    }
     ////////////////////////////////////////////////////////////////
 
 }

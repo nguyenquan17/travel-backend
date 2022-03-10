@@ -3,12 +3,14 @@ package com.example.travel.services.impl;
 import com.example.travel.dto.TourDetailDTO;
 import com.example.travel.entity.*;
 import com.example.travel.mapper.TourDetailMapper;
+import com.example.travel.repository.IImageRepository;
 import com.example.travel.repository.ITourDetailRepository;
 import com.example.travel.services.ITourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,12 @@ public class TourDetailService implements ITourDetailService {
     @Autowired
     private ITourDetailRepository iTourDetailRepository;
 
+    @Autowired
+    private IImageRepository iImageRepository;
+
     public TourDetailMapper mapper = new TourDetailMapper();
+
+
 
     @Override
     public List<TourDetail> getAllTours() {
@@ -41,8 +48,19 @@ public class TourDetailService implements ITourDetailService {
     @Override
     @Transactional
     public void createTour(TourDetailDTO tourCreateForm) {
+
         TourDetail tourDetail = mapper.toEntity(tourCreateForm);
-        iTourDetailRepository.save(tourDetail);
+        //save bang cha lai
+        TourDetail dataTourSaved = iTourDetailRepository.save(tourDetail);
+        for (int i = 0; i < tourCreateForm.getImageList().size(); i++) {
+            Image image = new Image();
+            image = tourCreateForm.getImageList().get(i);
+            image.setIdTourDetail(dataTourSaved);
+            iImageRepository.save(image);
+//            dataTourSaved.setImageList(tourCreateForm.getImageList());
+        }
+
+
     }
 
     @Override
@@ -59,5 +77,11 @@ public class TourDetailService implements ITourDetailService {
     @Override
     public void deleteTour(int id) {
         iTourDetailRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTours(List<Integer> ids) {
+        iTourDetailRepository.deleteTourDetailByIds(ids);
     }
 }

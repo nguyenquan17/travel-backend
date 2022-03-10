@@ -15,4 +15,5 @@ public interface ITourDetailService {
     void createTour(TourDetailDTO tourCreateForm);
     void updateTour(int id, TourDetailDTO tourUpdateForm);
     void deleteTour(int id);
+    void deleteTours(List<Integer> ids);
 }

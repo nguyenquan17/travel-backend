@@ -19,4 +19,10 @@ public interface ITourDetailRepository extends JpaRepository<TourDetail, Integer
     List<TourDetail> getTourDetailByTitleOrDayStartOrPrice(String title, Date dayStart, Long price);
 
 //    List<TourDetail> getTourDetailByTitleContainingOrDayStartOrPrice(String title, Date dayStart, Long price);
+    void deleteByIdIn(List<Integer> ids);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM TourDetail where id in (:ids)")
+    void deleteTourDetailByIds(List<Integer> ids);
 }
